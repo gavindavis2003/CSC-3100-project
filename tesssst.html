@@ -8,73 +8,38 @@
 </head>
 
 <body class="bg-light">
-  <div id ="divMain">
+  <div id="divMain">
       <button class="btn btn-primary" id="btnTest" type="button">Test</button>
-      <button class = "btn btn-primary" id="btnTable" type="button" onclick="generateTable()">Table</button>
+      <button class="btn btn-primary" id="btnTable" type="button" onclick="generateTable()">Table</button>
   </div>
-  <div>
-  <title>Grid Population</title>
-  <style>
-    .term {
-      font-weight: bold;
-    }
 
-    /* Define styling for the grid */
-    .grid {
-      display: flex;
-      flex-wrap: nowrap;
-      gap: 20px; /* Adjust the gap between term wrappers */
-      flex-direction: row-reverse;
-      justify-content: center;
-    }
-
-    .term-wrapper {
-      flex-basis: 1; /* Ensure each term occupies one-third of the container width */
-      box-sizing: border-box; /* Include padding and border in the element's total width */
-}
-
-    .box {
-      width: 100%;
-    /*  height: 50px; /* Adjust the height of grid items as needed */
-      background-color: lightblue;
-      border: 1px solid #000;
-      margin-bottom: 5px;
-    /*  display: flex;
-      justify-content: center;
-      align-items: center; */
-    }
-  </style>
-</div>
-<body>
+  <!-- Grid container -->
   <div class="grid" id="gridContainer"></div>
-
-</body>
-
-  <table border = "2">
-  <thead>
-      <tr>
-          <th>Fall 2022</th>
-          <th>Spring 2023</th>
-          <th>Fall 2023</th>
-          <th>Spring 2024</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>R 1, C 1</td>
-          <td>R 1, C 2</td>
-      </tr>
-      <!-- Table rows will be dynamically added here -->
-  </tbody>
+  
+  <table border="2">
+    <thead>
+        <tr>
+            <th>Fall 2022</th>
+            <th>Spring 2023</th>
+            <th>Fall 2023</th>
+            <th>Spring 2024</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>R 1, C 1</td>
+            <td>R 1, C 2</td>
+        </tr>
+        <!-- Table rows will be dynamically added here -->
+    </tbody>
   </table>
 
-  <div id = "arrayDisplay"></div>
+  <div id="arrayDisplay"></div>
     
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-
     const testjson = [
   {
     "TERM": "Spring Term 2024",
@@ -426,101 +391,54 @@
     "CAMPUS": "Tennessee Tech Univ, Main",
     "PRIMARYINSTRUCTOR": "Dr Mari Ramler"
   }
-]
-    const spring = testjson.filter(item => item.TERM == "Spring Term 2023")
+    ];
+
+    const spring = testjson.filter(item => item.TERM == "Spring Term 2023");
+
     $('#btnTest').on('click', function() {
-      const groupedData = testjson.reduce((terms, item) => {
-      const termKey = item.TERM;
-      if (!terms[termKey]) {
-        terms[termKey] = [];
-      }
-      terms[termKey].push(item);
-      return terms;
-    }, {});
-      console.log(groupedData["Fall Term 2023"][0].SUBJECT);
-      const array = groupedData["Fall Term 2023"];
-      console.log(array.item)
-      array.forEach(item => {
-        console.log(item.SUBJECT)
-        
-      }); 
-      
-      populateGrid(groupedData)
-/*
-      const jsonString = JSON.stringify(groupedData["Fall Term 2023"], null, 2)
-      let jsonDisplayDiv = document.createElement('div')
-      jsonDisplayDiv.innerHTML = `<pre>${jsonString}</pre>`
-      document.body.appendChild(jsonDisplayDiv)
-      console.log(jsonString)
-*/
-    
-    })
-    
+        const groupedData = testjson.reduce((terms, item) => {
+            const termKey = item.TERM;
+            if (!terms[termKey]) {
+                terms[termKey] = [];
+            }
+            terms[termKey].push(item);
+            return terms;
+        }, {});
 
-      //grid stuff
+        populateGrid(groupedData);
+    });
 
-      function createBox(content) {
-      const box = document.createElement('div');
-      box.classList.add('box');
-      box.textContent = content;
-      return box;
+    function createBox(content) {
+        const box = document.createElement('div');
+        box.classList.add('box');
+        box.textContent = content;
+        return box;
     }
 
-      function populateGrid(data) {
-    const gridContainer = document.getElementById('gridContainer');
+    function populateGrid(data) {
+        const gridContainer = document.getElementById('gridContainer');
 
-    // Clear existing content
-    gridContainer.innerHTML = '';
+        // Clear existing content
+        gridContainer.innerHTML = '';
 
-    // Iterate over each term in the data
-    for (const term in data) {
-    if (data.hasOwnProperty(term)) {
+        // Iterate over each term in the data
+        for (const term in data) {
+            if (data.hasOwnProperty(term)) {
+                // Create a div for the term and add term class
+                const termDiv = document.createElement('div');
+                termDiv.classList.add('term');
+                termDiv.textContent = term;
+                gridContainer.appendChild(termDiv);
 
-      // Create a wrapper for the term
-      const termWrapper = document.createElement('div');
-      termWrapper.classList.add('term-wrapper');
-
-      // Create a div for the term and add term class
-      const termContainer = document.createElement('div');
-      termContainer.classList.add('term');
-      termContainer.textContent = term;
-
-      termWrapper.appendChild(termContainer);
-
-      // Iterate over each class in the term
-      data[term].forEach(item => {
-        // Create a box for the class and append it to the grid container
-        const classDiv = document.createElement('div');
-        classDiv.classList.add('box')
-        classDiv.textContent = item.CRN;
-        termWrapper.appendChild(classDiv);
-      });
-
-      gridContainer.appendChild(termWrapper);
-
-
+                // Iterate over each class in the term
+                data[term].forEach(item => {
+                    // Create a box for the class and append it to the grid container
+                    const classBox = createBox(item.CRN);
+                    gridContainer.appendChild(classBox);
+                });
+            }
+        }
     }
-  }
-}
-
-
-  /*  
-    function displayTermData(TERM, termData) {
-      const tableBody =
-      tableBody.innerHTML = ''; // Clear existing table rows
-      
-      termData.forEach(item => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${item.name}</td>
-          <td>${item.class}</td>
-        `;
-        tableBody.appendChild(row);
-      });
-      
-    }
-    */
-
 </script>
 </body>
 </html>
