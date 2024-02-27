@@ -10,17 +10,25 @@
 <body class="bg-light">
   <div id ="divMain">
       <button class="btn btn-primary" id="btnTest" type="button">Test</button>
+      <button class = "btn btn-primary" id="btnTable" type="button" onclick="generateTable()">Table</button>
   </div>
-  <table>
-    <thead>
+
+  <table border = "2">
+  <thead>
       <tr>
-        <th>Name</th>
-        <th>Class</th>
+          <th>Fall 2022</th>
+          <th>Spring 2023</th>
+          <th>Fall 2023</th>
+          <th>Spring 2024</th>
       </tr>
-    </thead>
-    <tbody id="Spring 2023 Term Table">
+  </thead>
+  <tbody>
+      <tr>
+          <td>R 1, C 1</td>
+          <td>R 1, C 2</td>
+      </tr>
       <!-- Table rows will be dynamically added here -->
-    </tbody>
+  </tbody>
   </table>
 
   <div id = "arrayDisplay"></div>
@@ -398,7 +406,7 @@
       array.forEach(item => {
         console.log(item.SUBJECT)
         
-      });
+      }); 
 
       const jsonString = JSON.stringify(groupedData["Fall Term 2023"], null, 2)
       let jsonDisplayDiv = document.createElement('div')
