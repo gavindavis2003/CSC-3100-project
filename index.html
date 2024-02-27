@@ -8,12 +8,26 @@
 </head>
 
 <body class="bg-light">
-    <div id ="divMain">
-        <button class="btn btn-primary" id="btnTest" type="button">Test</button>
+    <div id ="divMain" class = "d-flex col-12 justify-content-center align-items-center vh-100">
+        <div class="card col-12 col-md-5 col-lg-4" id="divCard1">
+            <div class="card-header">
+                <h3 class="text-center">Course Analytics</h3>
+            </div>
+            <div class="card-body">
+                <button class="btn btn-primary col-12 mt-2" id="btnGenerate" type="button">Generate</button>
+            </div>
+        </div>
+
+        <div class="card col-12 col-md-5 col-lg-4" id="divGrid" style="display:none;">
+            <div class="card-header">
+                <h3 class="text-center">Grid Population</h3>
+            </div>
+            <div class="card-body">
+                <h6 class="text-center">Scroll Down</h6>
+            </div>
+        </div>
     </div>
 
-    <div>
-    <title>Grid Population</title>
     <style>
         .term {
             font-weight: bold;
@@ -44,7 +58,6 @@
             align-items: center; */
         }
     </style>
-</div>
 
 <body>
     <div class="grid" id="gridContainer"></div>
@@ -409,6 +422,17 @@
 ]
     const spring = testjson.filter(item => item.TERM == "Spring Term 2023")
     $('#btnTest').on('click', function() {
+        let strCard = $(this).attr('data-card')
+            if (strCard = 'Grid') {
+                $('#divGrid').slideToggle(function(){
+                    $('#divCard1').slideToggle;
+                }) 
+            } else {
+                $('#divCard1').slideToggle(function(){
+                    $('#divGrid').slideToggle;
+                })
+            }
+
         const groupedData = testjson.reduce((terms, item) => {
         const termKey = item.TERM;
         if (!terms[termKey]) {
