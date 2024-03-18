@@ -18,7 +18,7 @@
             </div>
         </div>
 
-        <div class="card col-12 col-md-5 col-lg-4" id="divGrid" style="display:none;">
+        <div class="card col-12 col-md-5 col-lg-4" id="divGrid" data-type="Grid" style="display:none;">
             <div class="card-header">
                 <h3 class="text-center">Grid Population</h3>
             </div>
@@ -421,9 +421,10 @@
   }
 ]
     const spring = testjson.filter(item => item.TERM == "Spring Term 2023")
-    $('#btnTest').on('click', function() {
+    $('#btnGenerate').on('click', function() {
         let strCard = $(this).attr('data-card')
-            if (strCard = 'Grid') {
+            if (strCard !== 'Grid') {
+              console.log('f');
                 $('#divGrid').slideToggle(function(){
                     $('#divCard1').slideToggle;
                 }) 
@@ -441,13 +442,14 @@
         terms[termKey].push(item);
         return terms;
         }, {});
-
+/*
         console.log(groupedData["Fall Term 2023"][0].SUBJECT);
         const array = groupedData["Fall Term 2023"];
         console.log(array.item)
         array.forEach(item => {
             console.log(item.SUBJECT)
-        }); 
+      
+        }); */
 
         populateGrid(groupedData)
     })
