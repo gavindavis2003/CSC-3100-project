@@ -61,6 +61,10 @@
 
 <body>
     <div class="grid" id="gridContainer"></div>
+    <div label for="Terms">Term:</div>
+    <select id="termsID" name="terms">
+
+    </select>
 </body>
     
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -434,7 +438,7 @@
                 })
             }
 
-        const groupedData = testjson.reduce((terms, item) => {
+         groupedData = testjson.reduce((terms, item) => {
         const termKey = item.TERM;
         if (!terms[termKey]) {
             terms[termKey] = [];
@@ -450,8 +454,20 @@
             console.log(item.SUBJECT)
       
         }); */
+      groupedData = switchCRN('10699', groupedData, 'Fall Term 2023' )
+      populateGrid(groupedData)
 
-        populateGrid(groupedData)
+
+      const select = document.getElementById("termsID");
+      testjson.forEach(item => {
+      const option = document.createElement("option");
+      if(option.value != item.TERM){
+      option.value = item.TERM;
+      option.text = item.TERM;
+      select.appendChild(option);
+      }
+      console.log(item.TERM)
+    });
     })
     
     //grid stuff
@@ -497,6 +513,21 @@
           }
         }
       }
+    function switchCRN(crn, data, newterm)
+    {
+      console.log(crn)
+      for(const Term in data){
+      data[Term].forEach(item => {
+        if(crn == item.CRN)
+      {
+        console.log(item)
+        item.TERM = newterm
+        console.log(item.TERM)
+      }
+      });
+    }
+    return(data)
+    };
 </script>
 </body>
 </html>
