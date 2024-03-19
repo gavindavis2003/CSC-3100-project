@@ -57,6 +57,34 @@
             justify-content: center;
             align-items: center; */
         }
+        .popup {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid black;
+            background-color: #fefefe;
+            padding: 20px;
+        }
+
+      /* Close button */
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: #aaaaaa;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
 
     <body>
@@ -83,6 +111,12 @@
             <!--THIS BUTTON DOESNT DO ANYTHING YET-->
             <button class = "btn btn-primary col-12 mt-2" type = "button" id = "btnRegenerate">Regenerate</button>
           </div>
+        </div>
+        <!--This is an attempt at a popup for prereq-->
+        <div class="popup" id="myPopup">
+          <p>Warning, this will have to add extra terms, click the check box to procead</p>
+          <button id="yesButton">Yes</button>
+          <button id="noButton">No</button>
         </div>
       </div>
     </body>
@@ -495,8 +529,29 @@
     $('#btnRegenerate').on('click', function() {
         let btnCRN = $('#txtCRN').val();
         let btnTerm = $('#termsID').val();
+        //prerequisite check
+        if(1 == 1)
+        {
+          // Event listener to open the popup when the button is clicked
+          openPopup()
+        }
+        else{
         console.log(btnTerm)
         groupedData = switchCRN(btnCRN, groupedData, btnTerm)
+        }
+    })
+
+    $('#yesButton').on('click', function(){
+      let btnCRN = $('#txtCRN').val();
+      let btnTerm = $('#termsID').val();    
+      closePopup()
+      console.log(btnTerm)
+      groupedData = switchCRN(btnCRN, groupedData, btnTerm)
+
+    })
+
+    $('#noButton').on('click', function(){
+      closePopup()
     })
 
     
@@ -548,16 +603,26 @@
       console.log(crn)
       for(const Term in data){
       data[Term].forEach(item => {
-        if(crn == item.CRN)
+      if(crn == item.CRN)
       {
         console.log(item)
         item.TERM = newterm
         console.log(item.TERM)
+        populateGrid(groupedData)
       }
       });
     }
     return(data)
     };
+    // Function to open the popup
+    function openPopup() {
+      document.getElementById("myPopup").style.display = "block";
+    }
+
+    // Function to close the popup
+    function closePopup() {
+      document.getElementById("myPopup").style.display = "none";
+    }
 
     //creating a new box that uses the input from the given term drop down menu and i also need to make a new option
     //for the user to type in the crn they want to change and then have another generate button for them to make the changes
