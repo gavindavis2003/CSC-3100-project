@@ -454,11 +454,13 @@
             console.log(item.SUBJECT)
       
         }); */
+        //working on getting switching terms working
       groupedData = switchCRN('10699', groupedData, 'Fall Term 2023' )
       populateGrid(groupedData)
 
 
       const select = document.getElementById("termsID");
+      //populates a selection box for terms for switiching
       testjson.forEach(item => {
       const option = document.createElement("option");
       if(option.value != item.TERM){
