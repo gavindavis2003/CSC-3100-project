@@ -491,6 +491,14 @@
       console.log(item.TERM)
     });
     })
+
+    $('#btnRegenerate').on('click', function() {
+        let btnCRN = $('#txtCRN').val();
+        let btnTerm = $('#termsID').val();
+        console.log(btnTerm)
+        groupedData = switchCRN(btnCRN, groupedData, btnTerm)
+    })
+
     
     //grid stuff
 
