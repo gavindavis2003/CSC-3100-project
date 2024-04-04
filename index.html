@@ -127,7 +127,25 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="dragula.js"></script>
 <script>
-
+    var options = {
+      // Function to determine if an item can be dropped into a container
+        accepts: function (el, target, source, sibling) {
+        // Logic to check if the dropped element can be accepted based on conditions
+          if (preq(el, source, groupedData)) {
+            return false; // Accept the drop
+          }else
+          {
+            return true;
+          }
+      },
+        moves: function (el, target, source, sibling){
+         if (termcheck(el)){
+            return false; // Reject the drop
+          }else{
+            return true;
+          }
+      }
+    };
     const testjson = [
   {
     "TERM": "Spring Term 2024",
@@ -526,9 +544,11 @@
       select.appendChild(option);
       }
       console.log(item.TERM)
-      dragula([document.getElementById("Spring Term 2023"), document.getElementById("Spring Term 2024")]);
+
 
     });
+
+    dragula([document.getElementById("Spring Term 2023"), document.getElementById("Spring Term 2024"), document.getElementById("Fall Term 2023"), document.getElementById("Fall Term 2022")], options);
     })
 
     $('#btnRegenerate').on('click', function() {
@@ -561,6 +581,46 @@
 
     
     //grid stuff
+
+    function preq(id, container, data){
+        // Select the parent div
+      var parentDiv = document.getElementById(container.id);
+
+      // Select all divs inside the parent div
+      var childDivs = parentDiv.querySelectorAll("div");
+      // Iterate through each div and check their IDs
+      if((id.textContent)%2 == 0 )
+        {
+
+        return true;
+        }
+      childDivs.forEach(function(div) {
+  
+        //api stuff for prerqs return true
+      });
+      return false;
+
+    }
+
+    function termcheck(term){
+
+      if("Spring Term 2023" == term.textContent)
+      {
+        return true;
+      }else if ("Spring Term 2024" == term.textContent)
+      {
+        return true;
+      }else if("Fall Term 2022" == term.textContent)
+      {
+        return true;
+      }else if("Fall Term 2023" == term.textContent)
+      {
+        return true;
+      }else
+      {
+        return false;
+      }
+    }
 
     function createBox(content) {
         const box = document.createElement('div');
